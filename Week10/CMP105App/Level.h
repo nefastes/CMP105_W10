@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "Framework/Input.h"
+#include "TileWork.h"
+#include "Player.h"
 #include <string>
 #include <iostream>
 
@@ -23,4 +25,11 @@ private:
 	// Default variables for level class.
 	sf::RenderWindow* window;
 	Input* input;
+
+	//Level map
+	TileWork tileWork;
+
+	//Player
+	Player player;
+	sf::Texture playerTex;
 };
