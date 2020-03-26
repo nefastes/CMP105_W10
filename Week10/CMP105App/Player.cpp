@@ -85,15 +85,15 @@ void Player::handleInput(float dt)
 void Player::collisionResponse(GameObject* collider)
 {
 	//Deltas
-	float dx = (collider->getPosition().x + collider->getSize().x / 2) - getPosition().x;
-	float dy = (collider->getPosition().y + collider->getSize().y / 2) - getPosition().y;
+	float dx = (collider->getPosition().x + collider->getSize().x / 2) - (getPosition().x + getSize().x / 2);
+	float dy = (collider->getPosition().y + collider->getSize().y / 2) - (getPosition().y + getSize().y / 2);
 
 
 	//Y axis hit
-	if (std::abs(dx) < std::abs(dy) && getPosition().x != collider->getPosition().x + collider->getSize().x)
+	if (std::abs(dx) <= std::abs(dy))
 	{
 		stepVelocity.y = 0;
-		setPosition(sf::Vector2f(getPosition().x, collider->getPosition().y - getSize().y));
+		setPosition(sf::Vector2f(getPosition().x, collider->getPosition().y - getSize().y - .125f));
 	}
 	//X axis hit
 	else
@@ -101,12 +101,12 @@ void Player::collisionResponse(GameObject* collider)
 		//Right side hit
 		if (dx < 0)
 		{
-			setPosition(sf::Vector2f(collider->getPosition().x + collider->getSize().x, getPosition().y));
+			setPosition(sf::Vector2f(collider->getPosition().x + collider->getSize().x + .125f, getPosition().y));
 		}
 		//Left side hit
 		else
 		{
-			setPosition(sf::Vector2f(collider->getPosition().x - getSize().x, getPosition().y));
+			setPosition(sf::Vector2f(collider->getPosition().x - getSize().x - .125f, getPosition().y));
 		}
 	}
 }
