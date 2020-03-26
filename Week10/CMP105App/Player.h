@@ -10,6 +10,8 @@ private:
 	Animation idle;
 	bool isMoving;
 	bool isOnGround;
+	bool isCollidingRight;
+	bool isCollidingLeft;
 	float sScale;
 	float prevTime;
 	sf::Vector2f gravity;
@@ -22,6 +24,6 @@ public:
 	void handleInput(float dt) override;
 	void setWindow(sf::RenderWindow* hwnd) { window = hwnd; };
 	void collisionResponse(GameObject* collider);
-	void setGroundState(bool s) { isOnGround = s; };
+	void setStates(bool left, bool right, bool ground) { isCollidingLeft = left; isCollidingRight = right; isOnGround = ground; };
 };
 

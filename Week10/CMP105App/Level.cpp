@@ -14,7 +14,19 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 	player.setWindow(window);
 	player.setPosition(sf::Vector2f(100, 200));
 	player.setVelocity(sf::Vector2f(200, 0));
-	player.setCollisionBox(sf::FloatRect(0, 0, player.getSize().x, player.getSize().y));
+	player.setCollisionBox(sf::FloatRect(6, 6, 20, 26));
+
+	//Debugging of all initialised objects in level.h
+	if (masterDebug)
+	{
+		player.setDebugging(true);
+		debugTxtFont.loadFromFile("font/arial.ttf");
+		debugPos.setFont(debugTxtFont);
+		debugPos.setCharacterSize(24);
+		debugPos.setPosition(0, 0);
+		debugPos.setFillColor(sf::Color::Red);
+		tileWork.setDebugging(true);
+	}
 }
 
 Level::~Level()
@@ -33,6 +45,11 @@ void Level::update(float dt)
 {
 	player.update(dt);
 	tileWork.update(dt, player);
+
+	if (masterDebug)
+	{
+		debugPos.setString(std::to_string(player.getPosition().x) +", " +std::to_string(player.getPosition().y));
+	}
 }
 
 // Render level
@@ -41,6 +58,13 @@ void Level::render()
 	beginDraw();
 	tileWork.renderMap(window);
 	window->draw(player);
+	if (masterDebug)
+	{
+		window->draw(*player.getDebugObjectSize());
+		window->draw(*player.getDebugCollisionBox());
+		tileWork.renderDebuggingTiles(window);
+		window->draw(debugPos);
+	}
 	endDraw();
 }
 

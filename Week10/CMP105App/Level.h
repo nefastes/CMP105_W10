@@ -32,4 +32,11 @@ private:
 	//Player
 	Player player;
 	sf::Texture playerTex;
+	sf::RectangleShape playerSize;
+	sf::RectangleShape playerHitBox;
+
+	//Debug
+	bool masterDebug = false;
+	sf::Text debugPos;
+	sf::Font debugTxtFont;
 };

@@ -77,10 +77,24 @@ void TileWork::update(float dt, Player& p)
 			if (Collision::checkBoundingBox(&p, &(*world)[i]))
 			{
 				p.collisionResponse(&(*world)[i]);
-				p.setGroundState(true);
 				hasCollided = true;
+				if(debugMode) (*world)[i].setDebugging(true);	//Debug
 			}
+			else (*world)[i].setDebugging(false);	//Debug
 		}
 	}
-	if(!hasCollided) p.setGroundState(false);
+	if(!hasCollided) p.setStates(false, false, false);	//Need this line to re-enable controls and physics in air
+}
+
+void TileWork::renderDebuggingTiles(sf::RenderWindow* hwnd)
+{
+	std::vector<GameObject>* world = tileMap.getLevel();
+	for (unsigned i = 0; i < (int)world->size(); ++i)
+	{
+		if ((*world)[i].isDebugging())
+		{
+			(*world)[i].updateDebugBoxes();
+			hwnd->draw(*(*world)[i].getDebugCollisionBox());
+		}
+	}
 }
